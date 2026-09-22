@@ -1,27 +1,18 @@
-name: Basic Commands
+name: Daily Cron Job
 
-on: [push]
+on:
+  schedule:
+    - cron: '0 3 * * *'
+
+  workflow_dispatch:
 
 jobs:
-  demo-commands:
+  run-job:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Show current working directory
-        run: pwd
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-      - name: List files in the directory
-        run: ls -la
-
-      - name: Print today's date
-        run: date
-
-      - name: Create and display a text file
-        run: |
-          echo "This is a demo file" > demo.txt
-          cat demo.txt
-
-      - name: Run Python program
-        run: |
-          echo 'print("Hello from Python!")' > hello.py
-          python3 hello.py
+      - name: Run Script
+        run: echo "Cron Job is running at $(date)"
